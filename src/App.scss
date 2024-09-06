@@ -1,0 +1,731 @@
+:root{
+    --background-color: rgb(52, 108, 126);
+    --font-color: white;
+    --border-radius: 10px;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--background-color);
+    color: var(--font-color);
+}
+
+.layout-container {
+    position: relative;
+    margin-left: 0px;
+}
+  
+.sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    //width: 200px; /* Adjust width as needed */
+    background-color: #f0f0f0; /* Example background color */
+    margin-left: 0;
+}
+
+main{
+    padding: 10px;
+    max-width: 80%;
+    //margin: 0 auto;
+    margin-left: 15%;
+}
+
+aside.sidebar{
+    position: fixed;
+    margin: 0;
+    margin-top: 100px;
+    max-width: 15%;
+    background-color: var(--background-color);
+}
+aside.sidebar img{
+    max-width: 100%;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0%;
+    background-color: var(--background-color);
+    padding: 0.5rem;
+    border-bottom: 1px solid white;
+    z-index: 10;
+}
+
+header a{
+    text-decoration: none;
+    color: inherit;
+    padding: 5px;
+}
+
+header a.logo{
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+header a.logo:hover{
+    color:rgb(184, 184, 184);
+}
+
+/* Below is for the menu and navbar */
+
+#menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#menu li{
+    position: relative;
+    display: inline-block;
+    padding: 5px 0px 5px;
+    border-radius: var(--border-radius);
+}
+
+#menu li:nth-of-type(1){
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+/*Fade in animation for dropdown*/
+
+@for $i from 1 through 6 {
+    #menu li:hover li:nth-child(#{$i}){
+        animation: fadeIn calc($i/2)+0.5s;
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+#menu li a{
+    padding: 5px;
+}
+
+#menu li:hover{
+    background-color: gray;
+    transition: 0.5s;
+}
+
+#menu li ul{
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    padding: 5px 0px 5px;
+}
+
+#menu ul li{
+    display: block;
+    background-color: gray;
+    min-width: 100px;
+    border-radius: 0px;
+}
+
+#menu ul li:first-of-type{
+    border-top-right-radius: var(--border-radius);
+}
+
+#menu ul li:last-of-type{
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+#menu ul li a{
+    display: block;
+    text-decoration: none;
+}
+
+#menu li:hover ul {
+    visibility: visible;
+}
+
+#menu ul li:hover{
+    background-color: rgb(94, 94, 94);
+}
+
+div.post{
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 20px;
+    margin: 30px;
+}
+
+div.post div.texts h2{
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+div.post div.texts h2:hover{
+    color: rgb(184, 184, 184);
+}
+
+div.post div.texts a{
+    text-decoration: none;
+    color: inherit;
+}
+
+div.post p.info{
+    margin: 6px 0;
+    color: #aaa;
+    font-size: 0.7rem;
+    font-weight: bold;
+    display: flex;
+    gap: 10px;
+}
+
+div.post p.info a.author{
+    color: #888;
+}
+
+div.post p.info a.author:hover{
+    color: white;
+}
+
+div.post p.summary{
+    margin: 10px 0;
+    line-height: 1.4rem;
+}
+
+div.post img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+h4, p{
+        margin-left: 1.5rem;
+}
+
+/* Reformatting for mobile view or when the page is narrowed */
+@media (max-width: 768px){
+    #menu{
+        margin-right: 1rem;
+        display: flex;
+        flex-direction: column;
+        padding: 5px 0px 5px;
+        border-radius: var(--border-radius);
+    }
+
+    #menu li:nth-of-type(1){
+        order: 3;
+    }
+    #menu li:nth-of-type(2){
+        order: 1;
+    }
+    #menu li:nth-of-type(3){
+        order: 2;
+    }
+
+    header a.logo{
+        padding: 0px;
+        margin-right: 0px;
+    }
+
+    main{
+        max-width: 100%;
+    }
+    div.post{
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+        max-width: 80%;
+        grid-template-columns: none;
+        grid-template-rows: auto;
+    }
+}
+
+form.login, form.register{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+input{
+    display: block;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px 7px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+button{
+    width: 100%;
+    display: block;
+    background-color: #555;
+    border: 0;
+    color: #fff;
+    border-radius: 5px;
+    padding: 7px 0;
+}
+
+form.login h1, form.register h1{
+    text-align: center;
+}
+
+.ql-toolbar .ql-stroke {
+    stroke: #fff !important;
+}
+
+.ql-strike svg{
+    stroke: #fff !important;
+}
+
+button:hover .ql-stroke,
+.ql-picker-label:hover .ql-stroke {
+  fill: none;
+  stroke: red !important;
+}
+
+.ql-active .ql-stroke {
+  fill: none;
+  stroke: red !important;
+}
+
+button:hover .ql-fill {
+  fill: red !important;
+  stroke: none;
+}
+
+.ql-active .ql-fill {
+  fill: red !important;
+  stroke: none;
+}
+
+.ql-picker-label{
+    color: #fff !important;
+}
+
+div.post-page div.image{
+    max-width: 80vw;
+    display: flex;
+    overflow: visible;
+}
+
+div.post-page div.image img{
+    width: 79vw;
+    height: auto;
+    object-fit: cover;
+    object-position: center center;
+}
+
+div.post-page a{
+    text-decoration: none;
+}
+
+div.post-page h1{
+    text-align: center;
+    margin: 10px 0 5px;
+}
+
+div.post-page time{
+    text-align: center;
+    display: block;
+    font-size: 0.7rem;
+    color:#aaa;
+}
+
+div.post-page div.author{
+    text-align: center;
+    margin-bottom: 0px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+#createbtn:active{
+    background-color: rgb(97, 108, 158);
+}
+
+div.edit-row{
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.post-page a.edit-btn{
+    background-color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+div.post-page a.edit-btn:hover{
+    background-color: #555;
+}
+
+a svg{
+    height: 20px;
+}
+
+div.comment{
+    display: flex;
+    justify-content: space-between;
+}
+
+a.cauthor{
+    color: white;
+    font-weight: bold;
+}
+
+a.cauthor:hover{
+    color: #777;
+}
+
+a.cauthor, div.comment time{
+    display: inline-block;
+    padding-right: 5px;
+}
+
+a.deletecomment{
+    background-color: #333;
+    margin-top: 40px;
+    max-height: 30px;
+    max-width: 30px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+a.deletecomment svg{
+    color: white;
+}
+
+p.commentContent{
+    margin-left: 50px;
+}
+
+div.profile a.edit-btn{
+    background-color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+div.profile a.edit-btn:hover{
+    background-color: #555;
+}
+
+div.profile{
+    display: block;
+    justify-content: space-between;
+    text-align: center;
+}
+
+div.bio{
+    padding: 4px;
+}
+
+div.bio p{
+    margin-left: 0;
+}
+
+div.author{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    gap: 5px;
+}
+
+div.author a{
+    text-decoration: none;
+    color: white;
+    margin-top: 6px;
+    font-size: 1rem;
+}
+
+div.author a:hover{
+    color: #444;
+}
+
+p.by{
+    margin-left: 0px;
+}
+
+form.commentForm{
+    margin: 50px 0 50px;
+}
+
+div.pagination{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+div.pagination a{
+    padding: 0 7px 2px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    background-color: #555;
+}
+
+div.pagination a:hover{
+    background-color: #888;
+}
+
+div.pagination div{
+    padding: 0 7px 2px;
+}
+
+.loadingCircle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.eye{
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+}
+
+p.view{
+    margin-top: 0px;
+    text-align: center;
+}
+
+.sort {
+    z-index: 1;
+    position: relative;
+    display: inline-block;
+    background-color: grey;
+    
+  
+    &:hover > ul {
+      display: block;
+    }
+  
+    ul {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: grey;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: none;
+      width: 6.5rem;
+    }
+
+    a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: white;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: darkgrey;
+        background-color: lightgrey;
+      }
+    }
+}
+
+#sortdiv{
+    display: flex;
+    max-height: 40px;
+    p{
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+}
+
+.fav{
+    text-decoration: none;
+    color: inherit;
+    justify-content: space-between;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    max-width: 70px;
+}
+
+#sortheader{
+    display: flex;
+    justify-content: space-between;
+}
+
+.fav:hover{
+    background-color: lightgrey;
+}
+
+.fav.clicked {
+    background-color: darkorange;
+}
+
+a.location{
+    justify-content: center;
+    align-items: center;
+}
+
+img.card{
+    max-width: 9rem;
+}
+
+button.blackjackstart{
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 15rem;
+    max-width: 30rem;
+    font-size: 2.5rem;
+    border-radius: 2rem;
+}
+
+button.blackjackstart:hover{
+    background-color: #888;
+}
+
+button.betbtn{
+    max-width: 20rem;
+    min-height: 3.5rem;
+    border-radius: 2rem;
+    font-size: 2rem;
+}
+
+button.betbtn:hover{
+    background-color: #888;
+}
+
+input.bettxt{
+    min-height: 3rem;
+    max-width: 20rem;
+    border-radius: 2rem;
+    font-size: 1.5rem;
+}
+
+button.actionbtn{
+    margin-bottom: 1px;
+    min-height: 2.5rem;
+    max-width: 12rem;
+    border-radius: 1.5rem;
+    outline-style: auto;
+    outline: black;
+}
+
+button.actionbtn:hover{
+    background-color: #888;
+}
+
+alert{
+    color: white;
+    font-size: 1.5rem;
+}
+
+a.location:hover{
+    color: #888;
+}
+
+textarea{
+    min-width: 100%;
+}
+
+div.profile a.delete-btn{
+    background-color: #b34242;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+div.profile a.delete-btn:hover{
+    background-color: rgb(255, 137, 137);
+}
+
+.groceryForm{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input-container{
+    display: flex;
+    width: 100%;
+    gap: 5px;
+}
+
+.groceryText{
+    flex: 1;
+    
+}
+.groceryQuantity{
+    width: 50px
+}
+
+.grocery {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 15px;
+    background-color: #4576a5;
+}
+
+.grocery p{
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.gbuttons{
+    display: flex;
+    gap: 5px;
+}
+
+.quant{
+    font-size: 24px;
+    padding: 10px;
+    line-height: 10px;
+    text-align: center;
+}
+
+.plusminus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.groceryDelete{
+    max-width: 60px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #b34242;
+}
+
+.quant:hover{
+    background-color: #888;
+}
+
+.groceryDelete:hover{
+    background-color: red;
+}

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { address } from "../Header";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import Post from "../Post";
 import Loading from "../Loading";
@@ -16,6 +16,7 @@ export default function UserPage(){
     const [isLoading, setIsLoading] = useState(true);
     const [isOn, setIsOn] = useState(false);
     const [redirect,setRedirect] = useState(false);
+    const navigate = useNavigate();
 
     //1:date desc, 2:date asc, 3:views desc, 4:views asc
     const [sortBy, setsortBy] = useState(1);
@@ -34,6 +35,7 @@ export default function UserPage(){
                 });
             });
     },[]);
+
     useEffect(()=>{
         fetch(`${address}/user/post/${id}?page=${currentPage}&sort=${sortBy}&fav=${isOn}`)
             .then(response=>{
@@ -44,6 +46,13 @@ export default function UserPage(){
                 setIsLoading(false);
             });
     },[currentPage,sortBy,isOn]);
+
+    useEffect(()=>{
+        if (redirect){
+            navigate('/');
+            setRedirect(false);
+        }
+    },[redirect]);
 
     function firstPage(){
         setCurrentPage(1);
@@ -75,22 +84,29 @@ export default function UserPage(){
     async function deleteProfile(){
         const confirmDelete = window.confirm('Are you sure you want to delete your profile? Your posts and comments will also be deleted.');
         if (confirmDelete){
-            const response = await fetch(`${address}/user/${id}/delete`, {method: 'DELETE', credentials: 'include'});
+            const storedTokens = localStorage.getItem('tokens');
+            const {accessToken,refreshToken} = JSON.parse(storedTokens);
+            const response = await fetch(`${address}/user/${id}/delete`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
+                method: 'DELETE'
+            });
             if (response.ok){
                 logout();
-                setRedirect(true);
             }
         }
     }
-    if (redirect){
-        return <Navigate to={'/'} />
-    }
-    async function logout(){
-        await fetch(address+'/logout', {
-          credentials: 'include',
-          method: 'POST',
-        });
-        setUserInfo(null);
+
+    function logout(){
+        try {
+            localStorage.removeItem('tokens');
+            setUserInfo(null);
+            setRedirect(true);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

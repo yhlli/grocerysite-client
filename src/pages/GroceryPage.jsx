@@ -10,11 +10,18 @@ export default function GroceryPage(){
     const [groceryList, setGroceryList] = useState([]);
     const [groceryItem, setGroceryItem] = useState('');
     const [groceryQuantity, setGroceryQuantity] = useState(1);
+    const storedTokens = localStorage.getItem('tokens');
+    const {accessToken,refreshToken} = JSON.parse(storedTokens);
 
     useEffect(()=>{
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         fetch(`${address}/${userInfo.id}/grocerylist`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'GET',
-            credentials: 'include',
         }).then(response=>{response.json().then(
             grocery=>{
                 setGroceryList(grocery);
@@ -30,14 +37,20 @@ export default function GroceryPage(){
         data.set('groceryItem', groceryItem);
         data.set('groceryQuantity', groceryQuantity);
         const response  = await fetch(`${address}/${userInfo.id}/grocerylist`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'POST',
             body: data,
-            credentials: 'include',
         });
         if (response.ok){
             await fetch(`${address}/${userInfo.id}/grocerylist`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
                 method: 'GET',
-                credentials: 'include',
             }).then(response=>{response.json().then(
                 grocery=>{
                     setGroceryList(grocery);
@@ -50,13 +63,19 @@ export default function GroceryPage(){
 
     const removeGrocery = async (ev)=>{
         const response = await fetch(`${address}/${userInfo.id}/grocerylist?item=${ev}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'DELETE',
-            credentials: 'include',
         })
         if (response.ok) {
             await fetch(`${address}/${userInfo.id}/grocerylist`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
                 method: 'GET',
-                credentials: 'include',
             }).then(response => {
                 response.json().then(
                     grocery => {
@@ -70,14 +89,20 @@ export default function GroceryPage(){
     const incrementGrocery = async (ev)=>{
         const num = 1;
         const response = await fetch(`${address}/${userInfo.id}/grocerylistquantity?num=${num}&name=${ev}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'PUT',
             body: ev,
-            credentials: 'include',
         })
         if (response.ok) {
             await fetch(`${address}/${userInfo.id}/grocerylist`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
                 method: 'GET',
-                credentials: 'include',
             }).then(response => {
                 response.json().then(
                     grocery => {
@@ -95,13 +120,19 @@ export default function GroceryPage(){
         }
         const num = -1;
         const response = await fetch(`${address}/${userInfo.id}/grocerylistquantity?num=${num}&name=${ev}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'PUT',
-            credentials: 'include',
         })
         if (response.ok) {
             await fetch(`${address}/${userInfo.id}/grocerylist`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
                 method: 'GET',
-                credentials: 'include',
             }).then(response => {
                 response.json().then(
                     grocery => {
@@ -124,10 +155,13 @@ export default function GroceryPage(){
             groceryCopy.splice(dIndex, 0, temp)
             setGroceryList(groceryCopy);
             await fetch(`${address}/${userInfo.id}/grocerylist`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken,
+                    'Content-Type': 'application/json'
+                },
                 method: 'PUT',
                 body: JSON.stringify(groceryCopy),
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
             })
         }
     }

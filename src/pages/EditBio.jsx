@@ -12,11 +12,15 @@ export default function EditBio(){
         const data = new FormData();
         data.set('content', content);
         ev.preventDefault();
-        console.log(content);
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         const response = await fetch(`${address}/user/editbio/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'POST',
             body: data,
-            credentials: 'include',
         });
         if (response.ok){
             setRedirect(true);

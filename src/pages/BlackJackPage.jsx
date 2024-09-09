@@ -38,8 +38,13 @@ export default function BlackJack(){
     const {userInfo} = useContext(UserContext);
 
     useEffect(()=>{
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         fetch(`${address}/user/${userInfo.username}/money`, {
-            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'GET',
         }).then(response=>response.json().then(
             cash=>setMoney(cash)
@@ -48,8 +53,13 @@ export default function BlackJack(){
 
     useEffect(()=>{
         if (userInfo !== null){
+            const storedTokens = localStorage.getItem('tokens');
+            const {accessToken,refreshToken} = JSON.parse(storedTokens);
             fetch(`${address}/user/${userInfo.username}/highscore`, {
-                credentials: "include"
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
             })
             .then(response=>{
                 response.json().then(highscore=>{
@@ -61,8 +71,13 @@ export default function BlackJack(){
 
     useEffect(()=>{
         if (userInfo !== null && money > highscore && highscore !== 0){
+            const storedTokens = localStorage.getItem('tokens');
+            const {accessToken,refreshToken} = JSON.parse(storedTokens);
             fetch(`${address}/user/${userInfo.username}/highscore?money=${money}`, {
-                credentials: "include",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
                 method: 'POST',
             });
         }
@@ -71,8 +86,13 @@ export default function BlackJack(){
     useEffect(()=>{
         const begin = async ()=>{
             if (startGame){
+                const storedTokens = localStorage.getItem('tokens');
+                const {accessToken,refreshToken} = JSON.parse(storedTokens);
                 const response = await fetch(`${address}/user/${userInfo.username}/money`, {
-                    credentials: 'include',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'x-refresh-token': refreshToken
+                    },
                     method: 'GET',
                 })
                 const data = await response.json();
@@ -233,8 +253,13 @@ export default function BlackJack(){
     const updateMoney = async (tmoney)=>{
         const num = tmoney;
         if (num !== -1){
+            const storedTokens = localStorage.getItem('tokens');
+            const {accessToken,refreshToken} = JSON.parse(storedTokens);
             await fetch(`${address}/user/${userInfo.username}/money?money=${num}`, {
-                credentials: "include",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
                 method: "POST",
             });
         }
@@ -514,8 +539,13 @@ export default function BlackJack(){
     }
 
     async function placeBet(value){
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         const response = await fetch(`${address}/user/${userInfo.username}/money`, {
-            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'GET',
         })
         var tmoney = await response.json();

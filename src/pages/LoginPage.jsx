@@ -17,9 +17,9 @@ export default function LoginPage(){
             headers: {'Content-Type':'application/json'}
         })
         if (response.ok){
-            const {accessToken, refreshToken} = await response.json();
+            const {accessToken, refreshToken, id, username} = await response.json();
             localStorage.setItem('tokens', JSON.stringify({accessToken,refreshToken}));
-            setUserInfo()
+            setUserInfo({id,username})
             setRedirect(true);
         } else {
             alert('Login failed')

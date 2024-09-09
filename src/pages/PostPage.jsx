@@ -48,7 +48,13 @@ export default function PostPage() {
 
     async function deletePost(ev){
         ev.preventDefault();
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         const response = await fetch(`${address}/post/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'DELETE',
             body: id,
         })
@@ -57,13 +63,18 @@ export default function PostPage() {
 
     async function addComment(ev){
         ev.preventDefault();
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         const data = new FormData();
         data.set('comment', comment);
         data.set('postId', id);
         const response = await fetch(`${address}/comment/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'POST',
             body: data,
-            credentials: 'include',
         });
         if (response.ok){
             const newComment = await response.json();
@@ -73,7 +84,13 @@ export default function PostPage() {
     }
 
     async function deleteComment(e){
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         const response = await fetch(`${address}/comment/${e}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'DELETE',
         })
         if (response.ok){
@@ -82,7 +99,13 @@ export default function PostPage() {
     }
 
     async function addFavorite(ev){
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         const response = await fetch(`${address}/post/favorite/${id}?user=${userInfo.id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'POST',
         });
         if (response.ok){
@@ -92,7 +115,13 @@ export default function PostPage() {
     }
 
     async function removeFavorite(){
+        const storedTokens = localStorage.getItem('tokens');
+        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         const response = await fetch(`${address}/post/favorite/${id}?user=${userInfo.id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken
+            },
             method: 'DELETE',
         });
         if (response.ok){

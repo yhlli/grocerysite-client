@@ -12,6 +12,7 @@ export default function Header(){
     const [country, setCountry] = useState('');
     const [vIp, setVIp] = useState('');
     const navigate = useNavigate();
+    const [isNavigate, setIsNavigate] = useState(false);
 
     useEffect(()=>{
         const storedTokens = localStorage.getItem('tokens');
@@ -49,10 +50,21 @@ export default function Header(){
         fetchip();
     },[]);
 
-    const logout = async ()=>{
-        localStorage.removeItem('tokens');
-        setUserInfo(null);
-        navigate('/index');
+    useEffect(()=>{
+        if (isNavigate){
+            navigate('/');
+            setIsNavigate(false);
+        }
+    },[isNavigate]);
+
+    const logout = ()=>{
+        try {
+            localStorage.removeItem('tokens');
+            setUserInfo(null);
+            setIsNavigate(true);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return(

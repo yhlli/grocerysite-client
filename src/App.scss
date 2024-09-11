@@ -183,7 +183,7 @@ div.post p.info{
 }
 
 div.post p.info a.author{
-    color: #888;
+    color: #d37e38;
 }
 
 div.post p.info a.author:hover{
@@ -225,9 +225,14 @@ h4, p{
         order: 2;
     }
 
+    #menu li a{
+        white-space: nowrap;
+    }
+
     header a.logo{
         padding: 0px;
         margin-right: 0px;
+        //max-width: 60px;
     }
 
     main{
@@ -239,6 +244,10 @@ h4, p{
         max-width: 80%;
         grid-template-columns: none;
         grid-template-rows: auto;
+    }
+
+    img.card{
+        max-width: 80px !important;
     }
 }
 

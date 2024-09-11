@@ -37,7 +37,7 @@ export default function EditBio(){
                 placeholder="Bio..."
                 value={content}
                 onChange={ev=>{setContent(ev.target.value)}} />
-            <button id="createbtn" style={{marginTop:'5px'}}>Edit Bio</button>
+            <button id="createbtn" style={{marginTop:'5px'}}>Submit</button>
         </form>
     );
 }

@@ -136,7 +136,7 @@ export default function UserPage(){
                             <div className="bio" dangerouslySetInnerHTML={{__html:aboutMe[0].content}} />
                         )}
                         { userInfo !== null && userInfo.username === id && (
-                            <Link className="edit-btn" to={`/user/editbio/${id}`}>Edit Profile</Link>
+                            <Link className="edit-btn" to={`/user/editbio/${id}`}>Edit Bio</Link>
                         )}
                         { userInfo !== null && userInfo.username === id && (
                             <Link className="delete-btn" onClick={()=>deleteProfile()}>Delete Profile</Link>

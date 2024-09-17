@@ -215,7 +215,6 @@ export default function GroceryPage(){
                     )}
                 </Droppable>
             </DragDropContext>
-            
             </>
         )}
         </>

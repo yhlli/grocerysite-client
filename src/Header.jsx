@@ -80,7 +80,7 @@ export default function Header(){
                 <li><Link to="/resume">My Resume</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/blackjack">Blackjack</Link></li>
-                {userInfo !== null && <li><Link to={`${userInfo.username}/grocery`}>Grocery List</Link></li>}
+                {userInfo && userInfo.username && <li><Link to={`${userInfo.username}/grocery`}>Grocery List</Link></li>}
                 </ul>
             </li>
             {(userInfo && userInfo.username) ? (

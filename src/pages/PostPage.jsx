@@ -22,7 +22,7 @@ export default function PostPage() {
     */
     useEffect(()=>{
         let url = `${address}/post/${id}`;
-        if (userInfo) url += `?user=${userInfo.id}`;
+        if (userInfo && userInfo.id) url += `?user=${userInfo.id}`;
         fetch(url)
             .then(response => {
                 response.json().then(postInfo => {
@@ -207,7 +207,7 @@ export default function PostPage() {
                 </div>
             ))}
 
-            {userInfo !== null && (
+            {userInfo && userInfo.username && (
                 <form className="commentForm" onSubmit={addComment}>
                     <input type="text" 
                         placeholder="Comment"

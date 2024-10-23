@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 
-//export const address = 'http://localhost:8080'
-export const address = 'https://grocerysite-server.onrender.com'
+export const address = 'http://localhost:8080'
+//export const address = 'https://grocerysite-server.onrender.com'
 
 export default function Header(){
     const {setUserInfo,userInfo} = useContext(UserContext);

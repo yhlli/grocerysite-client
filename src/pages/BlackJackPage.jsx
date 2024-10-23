@@ -650,7 +650,7 @@ export default function BlackJack(){
             <div>
                 {startGame ? (
                     <>
-                        {userInfo && (
+                        {userInfo.username && (
                             <h5>Highscore: {highscore}</h5>
                         )}
                         <h1>Your balance: {money}</h1>

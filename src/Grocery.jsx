@@ -1,12 +1,19 @@
 
 
-export default function Grocery({name, quantity, checked, _id, removeGrocery, increment, decrement}){
+export default function Grocery({name, quantity, checked, check, _id, removeGrocery, increment, decrement}){
 
+    const handleChange = async()=>{
+
+    }
     return(
     <>
         <div className="grocery">
             <p>{name} (Quantity: {quantity})</p>
             <div className="gbuttons">
+                <label>
+                    <input type="checkbox" checked={checked} onChange={()=>{check(name,checked)}} />
+                    Done
+                </label>
                 <div className="plusminus">
                     <button className="quant" onClick={() => increment(name)}>+</button>
                     <button className="quant" onClick={() => decrement(name,quantity, _id)}>-</button>

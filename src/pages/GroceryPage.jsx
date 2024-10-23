@@ -143,6 +143,10 @@ export default function GroceryPage(){
         }
     }
 
+    const checkGrocery = async (ev, checked)=>{
+        console.log(checked)
+    }
+
     const handleDragDrop = async (results)=>{
         const {source, destination, type} = results;
         if (!destination) return;
@@ -205,7 +209,8 @@ export default function GroceryPage(){
                                             <Grocery {...grocery} key={grocery._id}
                                                 removeGrocery={removeGrocery}
                                                 increment={incrementGrocery}
-                                                decrement={decrementGrocery} />
+                                                decrement={decrementGrocery}
+                                                check={checkGrocery} />
                                         </div>
                                     )}
                                 </Draggable>

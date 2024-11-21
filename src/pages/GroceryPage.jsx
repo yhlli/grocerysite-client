@@ -12,6 +12,8 @@ export default function GroceryPage(){
     const [groceryQuantity, setGroceryQuantity] = useState(1);
     const storedTokens = localStorage.getItem('tokens');
     const {accessToken,refreshToken} = JSON.parse(storedTokens);
+    const [checked, setChecked] = useState(false);
+    
 
     useEffect(()=>{
         const storedTokens = localStorage.getItem('tokens');
@@ -143,10 +145,6 @@ export default function GroceryPage(){
         }
     }
 
-    const checkGrocery = async (ev, checked)=>{
-        console.log(checked)
-    }
-
     const handleDragDrop = async (results)=>{
         const {source, destination, type} = results;
         if (!destination) return;
@@ -168,6 +166,19 @@ export default function GroceryPage(){
                 body: JSON.stringify(groceryCopy),
             })
         }
+    }
+
+    const check = async (ev)=>{
+        setChecked(!checked);
+        await fetch(`${address}/${userInfo.id}/grocerlistcheck?name=${ev}`, {
+            headers :{
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken,
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(checked),
+        })
     }
 
     return (
@@ -210,7 +221,7 @@ export default function GroceryPage(){
                                                 removeGrocery={removeGrocery}
                                                 increment={incrementGrocery}
                                                 decrement={decrementGrocery}
-                                                check={checkGrocery} />
+                                                check={check} />
                                         </div>
                                     )}
                                 </Draggable>

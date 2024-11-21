@@ -4,6 +4,12 @@
     --border-radius: 10px;
 }
 
+.dark-mode {
+    --background-color: #222;
+    color: #fff;
+    /* Other dark mode specific styles */
+}
+
 *{
     box-sizing: border-box;
 }

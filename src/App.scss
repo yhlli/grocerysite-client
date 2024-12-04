@@ -7,7 +7,11 @@
 .dark-mode {
     --background-color: #222;
     color: #fff;
-    /* Other dark mode specific styles */
+}
+
+.darkswitch {
+    margin-top: 3px;
+    position: relative;
 }
 
 *{
@@ -102,7 +106,7 @@ header a.logo:hover{
 
 /*Fade in animation for dropdown*/
 
-@for $i from 1 through 6 {
+@for $i from 1 through 7 {
     #menu li:hover li:nth-child(#{$i}){
         animation: fadeIn calc($i/2)+0.5s;
     }

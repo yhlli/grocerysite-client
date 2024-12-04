@@ -3,7 +3,6 @@ import Post from "../Post";
 import { address } from "../Header";
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
-import ReactSwitch from 'react-switch';
 
 export default function IndexPage(){
     const [posts,setPosts] = useState([]);
@@ -11,13 +10,6 @@ export default function IndexPage(){
     var [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
-
-    const [isDarkMode, setIsDarkMode] = useState(false);
-
-    const toggleDarkMode = () => {
-        setIsDarkMode(!isDarkMode);
-        document.body.classList.toggle('dark-mode');
-    };
 
     //1:date desc, 2:date asc, 3:views desc, 4:views asc
     const [sortBy, setsortBy] = useState(1);
@@ -58,23 +50,6 @@ export default function IndexPage(){
         <>
             {isLoading ? <Loading /> : (
                 <>
-                <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
-                    <ReactSwitch
-                        onChange={toggleDarkMode}
-                        checked={isDarkMode}
-                        onColor="#86d3ff"
-                        onHandleColor="#2693e6"
-                        offColor="#ccc"
-                        offHandleColor="#fff"
-                        handleDiameter={20}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        //boxShadow="0px 1px 5px rgba(0, 0, 0, 0.2)"
-                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                        height={20}
-                        width={48}   
-                    />
-                </div>
                 <div id="sortdiv">
                     <li className="sort"><Link>Sort By</Link>
                         <ul>

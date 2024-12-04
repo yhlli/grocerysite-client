@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import ReactSwitch from 'react-switch';
 
-export const address = 'http://localhost:8080'
-//export const address = 'https://grocerysite-server.onrender.com'
+//export const address = 'https://luke.lilinart.com:8080'
+//export const address = 'http://localhost:8080'
+export const address = 'https://grocerysite-server.onrender.com'
+
 
 export default function Header(){
     const {setUserInfo,userInfo} = useContext(UserContext);
@@ -13,6 +16,13 @@ export default function Header(){
     const [vIp, setVIp] = useState('');
     const navigate = useNavigate();
     const [isNavigate, setIsNavigate] = useState(false);
+
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(!isDarkMode);
+        document.body.classList.toggle('dark-mode');
+    };
 
     useEffect(()=>{
         const storedTokens = localStorage.getItem('tokens');
@@ -81,6 +91,23 @@ export default function Header(){
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/blackjack">Blackjack</Link></li>
                 {userInfo && userInfo.username && <li><Link to={`${userInfo.username}/grocery`}>Grocery List</Link></li>}
+                <li className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
+                    Dark Mode
+                    <ReactSwitch
+                        onChange={toggleDarkMode}
+                        checked={isDarkMode}
+                        onColor="#A9A9A9"
+                        onHandleColor="#606060"
+                        offColor="#ccc"
+                        offHandleColor="#fff"
+                        handleDiameter={20}
+                        uncheckedIcon={false}
+                        checkedIcon={false}
+                        height={20}
+                        width={48}
+                        className="darkswitch"
+                    />
+                </li>
                 </ul>
             </li>
             {(userInfo && userInfo.username) ? (

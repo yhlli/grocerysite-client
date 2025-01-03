@@ -1,7 +1,18 @@
+import { useState } from 'react';
+import { Document, Page } from 'react-pdf';
 export default function ResumePage(){
+
+    const [numPages, setNumPages] = useState(null);
+    const onDocumentLoadSuccess = ({numPages}) =>{
+        setNumPages(numPages);
+    };
+
     return(
         <>
-            <div>Resume</div>
+            {/* <Document file="../public/Resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
+                <Page pageNumber={1} />
+            </Document> */}
+            <object data="/Resume.pdf" type="" className='resume'></object>
         </>
     );
 }

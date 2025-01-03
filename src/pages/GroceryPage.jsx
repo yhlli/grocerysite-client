@@ -4,18 +4,21 @@ import { address } from "../Header";
 import Grocery from "../Grocery";
 
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
+import { useNavigate } from "react-router-dom";
 
 export default function GroceryPage(){
+    const navigate = useNavigate();
     const {userInfo} = useContext(UserContext);
     const [groceryList, setGroceryList] = useState([]);
     const [groceryItem, setGroceryItem] = useState('');
     const [groceryQuantity, setGroceryQuantity] = useState(1);
     const storedTokens = localStorage.getItem('tokens');
+    if (!storedTokens){
+        navigate('/');
+    }
     const {accessToken,refreshToken} = JSON.parse(storedTokens);
 
     useEffect(()=>{
-        const storedTokens = localStorage.getItem('tokens');
-        const {accessToken,refreshToken} = JSON.parse(storedTokens);
         fetch(`${address}/${userInfo.id}/grocerylist`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -166,6 +169,44 @@ export default function GroceryPage(){
         }
     }
 
+    const check = async (ev)=>{
+        const response = await fetch(`${address}/${userInfo.id}/grocerylistcheck?name=${ev}`, {
+            headers :{
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken,
+                'Content-Type': 'application/json'
+            },
+            method: 'GET',    
+        });
+        const checked = await response.json();
+        const res = await fetch(`${address}/${userInfo.id}/grocerylistcheck?name=${ev}`, {
+            headers :{
+                'Authorization': `Bearer ${accessToken}`,
+                'x-refresh-token': refreshToken,
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                isChecked: !checked,
+            }),
+        })
+        if (res.ok) {
+            await fetch(`${address}/${userInfo.id}/grocerylist`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-refresh-token': refreshToken
+                },
+                method: 'GET',
+            }).then(response => {
+                response.json().then(
+                    grocery => {
+                        setGroceryList(grocery);
+                    }
+                )
+            });
+        }
+    }
+
     return (
         <>
         {userInfo !== null && (
@@ -205,7 +246,8 @@ export default function GroceryPage(){
                                             <Grocery {...grocery} key={grocery._id}
                                                 removeGrocery={removeGrocery}
                                                 increment={incrementGrocery}
-                                                decrement={decrementGrocery} />
+                                                decrement={decrementGrocery}
+                                                check={check} />
                                         </div>
                                     )}
                                 </Draggable>

@@ -63,7 +63,7 @@ export default function IndexPage(){
                 </div>
                 
                 {posts.length > 0 && posts.map(post => (
-                    <Post {...post} />
+                    <Post key={post._id} {...post} />
                 ))}
                 <div className="pagination">
                     {currentPage>1 && (

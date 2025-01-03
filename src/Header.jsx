@@ -69,9 +69,9 @@ export default function Header(){
 
     const logout = ()=>{
         try {
-            localStorage.removeItem('tokens');
             setUserInfo(null);
             setIsNavigate(true);
+            localStorage.removeItem('tokens');
         } catch (error) {
             console.log(error);
         }
@@ -79,7 +79,7 @@ export default function Header(){
 
     return(
         <header>
-        <Link to="/" className="logo">Luke's Blog</Link>
+        <Link to="/" className="logo">Luke's Site</Link>
         <Link to="/weather" className="location">{city}, {region} {country}</Link>
         <nav>
             <ul id="menu">
@@ -92,7 +92,7 @@ export default function Header(){
                 <li><Link to="/blackjack">Blackjack</Link></li>
                 {userInfo && userInfo.username && <li><Link to={`${userInfo.username}/grocery`}>Grocery List</Link></li>}
                 <li className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
-                    Dark Mode
+                    <Link onClick={toggleDarkMode}>Dark Mode</Link>
                     <ReactSwitch
                         onChange={toggleDarkMode}
                         checked={isDarkMode}

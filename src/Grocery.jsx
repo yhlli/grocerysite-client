@@ -1,11 +1,12 @@
-export default function Grocery({name, quantity, _id, removeGrocery, increment, decrement, check}){
+export default function Grocery({name, quantity, checked, _id, removeGrocery, increment, decrement, check}){
+    const strikethroughStyle = checked ? { textDecoration: 'line-through' } : {};
     return(
     <>
         <div className="grocery">
-            <p>{name} (Quantity: {quantity})</p>
+            <p style={strikethroughStyle}>{name} (Quantity: {quantity})</p>
             <div className="gbuttons">
                 <label>
-                    <input type="checkbox" onClick={()=>check(name)} />
+                    <input type="checkbox" onClick={()=>check(name)} defaultChecked={checked} />
                     Done
                 </label>
                 <div className="plusminus">

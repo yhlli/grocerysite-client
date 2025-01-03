@@ -9,10 +9,10 @@ export default function ResumePage(){
 
     return(
         <>
-            <Document file="../public/Resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
+            {/* <Document file="../public/Resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
                 <Page pageNumber={1} />
-            </Document>
-            <object data="../public/Resume.pdf" type=""></object>
+            </Document> */}
+            <object data="/Resume.pdf" type="" className='resume'></object>
         </>
     );
 }

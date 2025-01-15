@@ -7,7 +7,6 @@ import ReactSwitch from 'react-switch';
 //export const address = 'http://localhost:8080'
 export const address = 'https://grocerysite-server.onrender.com'
 
-
 export default function Header(){
     const {setUserInfo,userInfo} = useContext(UserContext);
     const [city, setCity] = useState('');

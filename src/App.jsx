@@ -16,6 +16,9 @@ import EditBio from './pages/EditBio';
 import WeatherPage from './pages/WeatherPage';
 import BlackJack from './pages/BlackJackPage';
 import GroceryPage from './pages/GroceryPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import VerificationPage from './pages/VerificationPage';
 
 
 function App() {
@@ -37,6 +40,9 @@ function App() {
           <Route path={'/weather'} element={<WeatherPage />} />
           <Route path={'/blackjack'} element={<BlackJack />} />
           <Route path={'/:id/grocery'} element={<GroceryPage />} />
+          <Route path={'/forgot-password'} element={<ForgotPasswordPage />} />
+          <Route path={'/reset-password'} element={<ResetPasswordPage />} />
+          <Route path={'/verify-email'} element={<VerificationPage/>} />
         </Route>
       </Routes>
     </UserContextProvider>

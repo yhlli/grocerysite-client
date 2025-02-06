@@ -756,3 +756,24 @@ div.profile a.delete-btn:hover{
 .groceryDelete:hover{
     background-color: red;
 }
+
+.newsButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4576a5;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    margin-left: 10px;
+    max-width: 5%;
+    cursor: pointer;
+}
+
+.newsButton:hover{
+    background-color: #888;
+}
+
+.newsButton.active{
+    background-color: red;
+}

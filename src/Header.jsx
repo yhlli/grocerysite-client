@@ -90,7 +90,7 @@ export default function Header(){
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/blackjack">Blackjack</Link></li>
                 {userInfo && userInfo.username && <li><Link to={`${userInfo.username}/grocery`}>Grocery List</Link></li>}
-                <li className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
+                <li className={`${isDarkMode ? 'dark-mode' : ''}`}>
                     <Link onClick={toggleDarkMode}>Dark Mode</Link>
                     <ReactSwitch
                         onChange={toggleDarkMode}

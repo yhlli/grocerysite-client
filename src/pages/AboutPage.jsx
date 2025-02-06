@@ -3,7 +3,7 @@ export default function AboutPage(){
         <> 
             <h4>About</h4>
 
-            <img src="./public/MERN-logo.png" alt="MERN Stack" 
+            <img src="/MERN-logo.png" alt="MERN Stack" 
                 style={{
                     width: '50%',
                     marginLeft: '2rem',

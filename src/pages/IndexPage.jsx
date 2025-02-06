@@ -10,6 +10,7 @@ export default function IndexPage(){
     var [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
+    const [showNews, setShowNews] = useState(false);
 
     //1:date desc, 2:date asc, 3:views desc, 4:views asc
     const [sortBy, setsortBy] = useState(1);
@@ -21,14 +22,14 @@ export default function IndexPage(){
     };
 
     useEffect(()=>{
-        fetch(address+'/post?page='+currentPage+'&sort='+sortBy).then(response=>{
+        fetch(address+'/post?page='+currentPage+'&sort='+sortBy+'&showNews='+showNews).then(response=>{
             response.json().then(posts=>{
                 setPosts(posts.data);
                 setTotalPages(Math.ceil(posts.totalCount/20));
             });
             setIsLoading(false);
         });
-    },[currentPage,sortBy]);
+    },[currentPage,sortBy,showNews]);
 
     function firstPage(){
         setCurrentPage(1);
@@ -46,6 +47,10 @@ export default function IndexPage(){
         setCurrentPage(currentPage - 1);
     }
 
+    const handleToggle = () => {
+        setShowNews(!showNews);
+    };
+
     return(
         <>
             {isLoading ? <Loading /> : (
@@ -60,7 +65,9 @@ export default function IndexPage(){
                         </ul>
                     </li>
                     <p>{sortCriteria[sortBy]}</p>
+                    <button className={`newsButton ${showNews ? 'active' : ''}`} onClick={handleToggle}>Show News</button>
                 </div>
+
                 
                 {posts.length > 0 && posts.map(post => (
                     <Post key={post._id} {...post} />

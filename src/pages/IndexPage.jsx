@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
 import Post from "../Post";
 import { address } from "../Header";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
 
 export default function IndexPage(){
     const [posts,setPosts] = useState([]);
 
-    var [currentPage, setCurrentPage] = useState(1);
+    //var [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
-    const [showNews, setShowNews] = useState(false);
+    //const [showNews, setShowNews] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const currentPage = parseInt(searchParams.get('page') || '1', 10);
+    const sortBy = parseInt(searchParams.get('sort') || '1', 10);
+    const showNews = searchParams.get('showNews') === 'true';
 
     //1:date desc, 2:date asc, 3:views desc, 4:views asc
-    const [sortBy, setsortBy] = useState(1);
+    //const [sortBy, setsortBy] = useState(1);
     const sortCriteria = {
         1: "Date descending",
         2: "Date ascending",
@@ -22,34 +27,45 @@ export default function IndexPage(){
     };
 
     useEffect(()=>{
+        setIsLoading(true);
         fetch(address+'/post?page='+currentPage+'&sort='+sortBy+'&showNews='+showNews).then(response=>{
             response.json().then(posts=>{
                 setPosts(posts.data);
                 setTotalPages(Math.ceil(posts.totalCount/20));
-            });
+            })
+            .catch(err=>console.log(err));
             setIsLoading(false);
         });
     },[currentPage,sortBy,showNews]);
 
-    function firstPage(){
-        setCurrentPage(1);
+    const updateQueryParams = (page, sort, news) => {
+        const params = new URLSearchParams(searchParams);
+        params.set('page', page);
+        params.set('sort', sort);
+        params.set('showNews', news);
+        setSearchParams(params);
     }
 
-    function nextPage(){
-        setCurrentPage(currentPage + 1);
+    const firstPage = () => {
+        updateQueryParams(1, sortBy, showNews);
+    }
+    const nextPage = () => {
+        updateQueryParams(currentPage + 1, sortBy, showNews);
+    }
+    const lastPage = () => {
+        updateQueryParams(totalPages, sortBy, showNews);
+    }
+    const prevPage = () => {
+        updateQueryParams(currentPage - 1, sortBy, showNews);
     }
 
-    function lastPage(){
-        setCurrentPage(totalPages);
-    }
-    
-    function prevPage(){
-        setCurrentPage(currentPage - 1);
+    const handleChangeSort = (sort) => {
+        updateQueryParams(1, sort, showNews);
     }
 
     const handleToggle = () => {
-        setShowNews(!showNews);
-    };
+        updateQueryParams(1, sortBy, !showNews);
+    }
 
     return(
         <>
@@ -58,16 +74,17 @@ export default function IndexPage(){
                 <div id="sortdiv">
                     <li className="sort"><Link>Sort By</Link>
                         <ul>
-                            <li><Link onClick={()=>setsortBy(1)}>Date desc.</Link></li>
-                            <li><Link onClick={()=>setsortBy(2)}>Date asc.</Link></li>
-                            <li><Link onClick={()=>setsortBy(3)}>Views desc.</Link></li>
-                            <li><Link onClick={()=>setsortBy(4)}>Views asc.</Link></li>
+                            <li><button onClick={()=>handleChangeSort(1)}>Date desc.</button></li>
+                            <li><button onClick={()=>handleChangeSort(2)}>Date asc.</button></li>
+                            <li><button onClick={()=>handleChangeSort(3)}>Views desc.</button></li>
+                            <li><button onClick={()=>handleChangeSort(4)}>Views asc.</button></li>
                         </ul>
                     </li>
                     <p>{sortCriteria[sortBy]}</p>
-                    <button className={`newsButton ${showNews ? 'active' : ''}`} onClick={handleToggle}>Show News</button>
+                    <button className={`newsButton ${showNews ? 'active' : ''}`} onClick={handleToggle}>
+                        {showNews ? 'Hide News' : 'Show News'}
+                    </button>
                 </div>
-
                 
                 {posts.length > 0 && posts.map(post => (
                     <Post key={post._id} {...post} />
@@ -75,15 +92,15 @@ export default function IndexPage(){
                 <div className="pagination">
                     {currentPage>1 && (
                         <>
-                            <Link onClick={firstPage}>First</Link>
-                            <Link onClick={prevPage}>Prev</Link>
+                            <button onClick={firstPage}>First</button>
+                            <button onClick={prevPage}>Prev</button>
                         </>
                     )}
                     <div>{currentPage}</div>
                     {currentPage<totalPages && (
                         <>
-                            <Link onClick={nextPage}>Next</Link>
-                            <Link onClick={lastPage}>Last</Link>
+                            <button onClick={nextPage}>Next</button>
+                            <button onClick={lastPage}>Last</button>
                         </>
                     )}
                 </div>

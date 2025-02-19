@@ -497,15 +497,18 @@ div.pagination{
     gap: 4px;
 }
 
-div.pagination a{
+div.pagination button{
     padding: 0 7px 2px;
     border-radius: 6px;
     text-decoration: none;
     color: white;
     background-color: #555;
+    cursor: pointer;
+    width: 3rem;
+    padding: 3px 3px;
 }
 
-div.pagination a:hover{
+div.pagination button:hover{
     background-color: #888;
 }
 
@@ -776,4 +779,22 @@ div.profile a.delete-btn:hover{
 
 .newsButton.active{
     background-color: red;
+}
+
+ul li button{
+    display: block;
+    text-decoration: none;
+    background: none;
+    border: none;
+    color: white;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    cursor: pointer;
+}
+
+ul li button:hover{
+    color: darkgrey;
+    background-color: lightgrey;
+    border-radius: 0;
 }
